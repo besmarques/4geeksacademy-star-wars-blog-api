@@ -41,13 +41,30 @@ def handle_hello():
 
 
 @app.route('/character', methods=['GET'])
-def get_character():
+def get_all_chars():
     
-    response_body = {
-        "msg": "Hello, this is your GET /character response "
-    }
+    characters = Character.get_all_chars()
+    serialized_characters = []
+    for character in characters:
+        serialized_characters.append(character.serialize())
 
-    return jsonify(response_body), 200
+    #response_body = {
+    #    "msg": "Hello, this is your GET /character response "
+    #}
+
+    return(jsonify(serialized_characters))
+
+
+@app.route('/character/<int:id>', methods=['GET'])
+def get_character_by_id(id):
+    
+    character = Character.get_chars_by_id(id)
+
+    #response_body = {
+    #    "msg": "Hello, this is your GET /character response "
+    #}
+
+    return(jsonify(character.serialize()))
 
 
 

@@ -64,7 +64,7 @@ class Character(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "image": self.type,
+            "image": self.image,
             "name": self.name,
             "birth_year": self.birth_year,
             "height": self.height,
@@ -80,6 +80,10 @@ class Character(db.Model):
         characters = cls.query.all()
         return characters
 
+    @classmethod
+    def get_chars_by_id(cls, id):
+        character_by_id = cls.query.filter_by(id = id).one_or_none()
+        return character_by_id
 
 
 #class Favorites(db.Model):

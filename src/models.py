@@ -34,6 +34,34 @@ class Vehicles(db.Model):
     passengers = db.Column (db.Integer, unique=False, nullable=False)
     consumables = db.Column (db.Integer, unique=False, nullable=False)
 
+    def serialize(self):
+        return {
+            "id": self.id,
+            "image": self.image,
+            "name": self.name,
+            "model": self.model,
+            "manufacturer": self.manufacturer,
+            "vehicle_class": self.vehicle_class,
+            "cost": self.cost,
+            "speed": self.speed,
+            "length": self.length,
+            "cargo_capacity": self.cargo_capacity,
+            "crew": self.crew,
+            "passengers": self.passengers,
+            "consumables": self.consumables
+        }
+
+    @classmethod
+    def get_all_vehicles(cls):
+        vehicles = cls.query.all()
+        return vehicles
+
+    @classmethod
+    def get_vehicles_by_id(cls, id):
+        vehicles_by_id = cls.query.filter_by(id = id).one_or_none()
+        return vehicles_by_id
+
+
 class Planets(db.Model):
     __tablename__ = 'planets'
     id = db.Column (db.Integer, unique=True, primary_key=True)
@@ -47,6 +75,40 @@ class Planets(db.Model):
     climate = db.Column (db.String(250), unique=False, nullable=False)
     terrain = db.Column (db.String(250), unique=False, nullable=False)
     surface_water = db.Column (db.Integer, unique=False, nullable=False)
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "image": self.image,
+            "name": self.name,
+            "diameter": self.diameter,
+            "rotation": self.rotation,
+            "orbital_period": self.orbital_period,
+            "gravity": self.gravity,
+            "population": self.population,
+            "climate": self.climate,
+            "terrain": self.terrain,
+            "surface_water": self.surface_water,
+        }
+
+    @classmethod
+    def get_all_planets(cls):
+        planets = cls.query.all()
+        return planets
+
+    @classmethod
+    def get_planets_by_id(cls, id):
+        planets_by_id = cls.query.filter_by(id = id).one_or_none()
+        return planets_by_id
+
+
+
+
+
+
+
+
+
 
 class Character(db.Model):
     __tablename__ = 'characters'

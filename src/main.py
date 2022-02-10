@@ -40,6 +40,44 @@ def handle_hello():
     return jsonify(response_body), 200
 
 
+@app.route('/vehicles', methods=['GET'])
+def get_all_vehicles():
+    
+    vehicles = Vehicles.get_all_vehicles()
+    serialized_vehicles = []
+    for vehicle in vehicles:
+        serialized_vehicles.append(vehicle.serialize())
+
+    return(jsonify(serialized_vehicles))
+
+
+@app.route('/vehicles/<int:id>', methods=['GET'])
+def get_vehicles_by_id(id):
+    
+    vehicle = Vehicles.get_vehicles_by_id(id)
+    
+    return(jsonify(vehicle.serialize()))
+
+
+@app.route('/planets', methods=['GET'])
+def get_all_planets():
+    
+    planets = Planets.get_all_planets()
+    serialized_planets = []
+    for planet in planets:
+        serialized_planets.append(vehicle.serialize())
+
+    return(jsonify(serialized_planets))
+
+
+@app.route('/planets/<int:id>', methods=['GET'])
+def get_planets_by_id(id):
+    
+    planet = planets.get_planets_by_id(id)
+    
+    return(jsonify(vehicle.serialize()))
+
+
 @app.route('/character', methods=['GET'])
 def get_all_chars():
     
@@ -48,10 +86,6 @@ def get_all_chars():
     for character in characters:
         serialized_characters.append(character.serialize())
 
-    #response_body = {
-    #    "msg": "Hello, this is your GET /character response "
-    #}
-
     return(jsonify(serialized_characters))
 
 
@@ -59,11 +93,7 @@ def get_all_chars():
 def get_character_by_id(id):
     
     character = Character.get_chars_by_id(id)
-
-    #response_body = {
-    #    "msg": "Hello, this is your GET /character response "
-    #}
-
+    
     return(jsonify(character.serialize()))
 
 

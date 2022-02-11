@@ -30,14 +30,24 @@ def handle_invalid_usage(error):
 def sitemap():
     return generate_sitemap(app)
 
-@app.route('/user', methods=['GET'])
-def handle_hello():
 
-    response_body = {
-        "msg": "Hello, this is your GET /user response "
-    }
 
-    return jsonify(response_body), 200
+@app.route('/users', methods=['GET'])
+def get_all_users():
+    
+    users = User.get_all_users()
+    serialized_users = []
+    for user in users:
+        serialized_users.append(user.serialize())
+
+    return(jsonify(serialized_users))
+
+@app.route('/user/<int:id>', methods=['GET'])
+def get_users_by_id(id):
+    
+    user = User.get_users_by_id(id)
+    
+    return(jsonify(user.serialize()))
 
 
 @app.route('/vehicles', methods=['GET'])

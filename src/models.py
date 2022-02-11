@@ -17,6 +17,16 @@ class User(db.Model):
             "email": self.email,
             # do not serialize the password, its a security breach
         }
+    
+    @classmethod
+    def get_all_users(cls):
+        users = cls.query.all()
+        return users
+
+    @classmethod
+    def get_users_by_id(cls, id):
+        users_by_id = cls.query.filter_by(id = id).one_or_none()
+        return users_by_id
 
 class Vehicles(db.Model):
     __tablename__ = 'vehicles'
@@ -102,14 +112,6 @@ class Planets(db.Model):
         return planets_by_id
 
 
-
-
-
-
-
-
-
-
 class Character(db.Model):
     __tablename__ = 'characters'
     id = db.Column (db.Integer, unique=True, primary_key=True)
@@ -148,14 +150,32 @@ class Character(db.Model):
         return character_by_id
 
 
-#class Favorites(db.Model):
-#    __tablename__ = 'favorites'
-#    id = db.Column (db.Integer, unique=True, primary_key=True)
-#    character_post_id = db.Column (db.Integer, ForeignKey('characters.id'))
-#    characters = relationship(Character)
-#    vehicles_post_id = db.Column (db.Integer, ForeignKey('vehicles.id'))
-#    vehicles = relationship(Vehicles)
-#    planets_post_id = db.Column (db.Integer, ForeignKey('planets.id'))
-#    planets = relationship(Planets)
-#    user_id = db.Column (db.Integer, ForeignKey('user.id'))
-#    user = relationship(User)
+class Favorites(db.Model):
+    __tablename__ = 'favorites'
+    id = db.Column (db.Integer, unique=True, primary_key=True)
+    character_post_id = db.Column (db.Integer, db.ForeignKey('characters.id'))
+    characters = db.relationship(Character)
+    vehicles_post_id = db.Column (db.Integer, db.ForeignKey('vehicles.id'))
+    vehicles = db.relationship(Vehicles)
+    planets_post_id = db.Column (db.Integer, db.ForeignKey('planets.id'))
+    planets = db.relationship(Planets)
+    user_id = db.Column (db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship(User)
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "character_post_id": self.character_post_id,
+            "vehicles_post_id": self.vehicles_post_id,
+            "planets_post_id": self.planets_post_id
+        }
+
+    @classmethod
+    def get_all_favorites(cls):
+        favorites = cls.query.all()
+        return favorites
+
+    @classmethod
+    def get_favorites_by_id(cls, id):
+        favorite_by_id = cls.query.filter_by(id = id).one_or_none()
+        return favorite_by_id

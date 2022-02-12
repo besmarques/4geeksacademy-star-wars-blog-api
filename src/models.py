@@ -61,6 +61,11 @@ class Vehicles(db.Model):
             "consumables": self.consumables
         }
 
+    #@classmethod
+    #def create(self):
+    #    db.session.add(self)
+    #    db.session.commit()
+
     @classmethod
     def get_all_vehicles(cls):
         vehicles = cls.query.all()
@@ -167,7 +172,8 @@ class Favorites(db.Model):
             "id": self.id,
             "character_post_id": self.character_post_id,
             "vehicles_post_id": self.vehicles_post_id,
-            "planets_post_id": self.planets_post_id
+            "planets_post_id": self.planets_post_id,
+            "user_id": self.user_id
         }
 
     @classmethod
@@ -179,3 +185,8 @@ class Favorites(db.Model):
     def get_favorites_by_id(cls, id):
         favorite_by_id = cls.query.filter_by(id = id).one_or_none()
         return favorite_by_id
+    
+    @classmethod
+    def get_favorites_by_user_id(cls, user_id):
+        favorite_by_user_id = cls.query.filter_by(user_id = user_id).one_or_none()
+        return favorite_by_user_id

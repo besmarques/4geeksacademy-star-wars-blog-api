@@ -8,7 +8,7 @@ from flask_swagger import swagger
 from flask_cors import CORS
 from utils import APIException, generate_sitemap
 from admin import setup_admin
-from models import db, User, Character, Vehicles, Planets
+from models import db, User, Character, Vehicles, Planets, Favorites
 #from models import Person
 
 app = Flask(__name__)
@@ -69,6 +69,7 @@ def get_vehicles_by_id(id):
     return(jsonify(vehicle.serialize()))
 
 
+
 @app.route('/planets', methods=['GET'])
 def get_all_planets():
     
@@ -105,6 +106,33 @@ def get_character_by_id(id):
     character = Character.get_chars_by_id(id)
     
     return(jsonify(character.serialize()))
+
+#Get favorites using user ID| Check if this is the right logic
+@app.route('/users/favorites/<int:user_id>', methods=['GET'])
+def get_favorites_by_user_id(user_id):
+    
+    favorite = Favorites.get_favorites_by_user_id(user_id)
+    
+    return(jsonify(favorite.serialize()))
+
+
+@app.route('/favorites', methods=['GET'])
+def get_all_favorites():
+    
+    favorites = Favorites.get_all_favorites()
+    serialized_favorites = []
+    for favorite in favorites:
+        serialized_favorites.append(favorite.serialize())
+
+    return(jsonify(serialized_favorites))
+
+
+@app.route('/favorites/<int:id>', methods=['GET'])
+def get_favorites_by_id(id):
+    
+    favorite = Favorites.get_favorites_by_id(id)
+    
+    return(jsonify(favorite.serialize()))
 
 
 

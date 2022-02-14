@@ -8,8 +8,8 @@ class User(db.Model):
     password = db.Column(db.String(80), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
 
-    def __repr__(self):
-        return '<User %r>' % self.username
+    #def __repr__(self):
+    #    return '<User %r>' % self.username
 
     def serialize(self):
         return {
@@ -175,6 +175,11 @@ class Favorites(db.Model):
             "planets_post_id": self.planets_post_id,
             "user_id": self.user_id
         }
+    
+    @classmethod
+    def create(self):
+        db.session.add(self)
+        db.session.commit()
 
     @classmethod
     def get_all_favorites(cls):

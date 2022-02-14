@@ -42,7 +42,7 @@ def get_all_users():
 
     return(jsonify(serialized_users))
 
-@app.route('/user/<int:id>', methods=['GET'])
+@app.route('/users/<int:id>', methods=['GET'])
 def get_users_by_id(id):
     
     user = User.get_users_by_id(id)
@@ -76,7 +76,7 @@ def get_all_planets():
     planets = Planets.get_all_planets()
     serialized_planets = []
     for planet in planets:
-        serialized_planets.append(vehicle.serialize())
+        serialized_planets.append(planet.serialize())
 
     return(jsonify(serialized_planets))
 
@@ -84,12 +84,12 @@ def get_all_planets():
 @app.route('/planets/<int:id>', methods=['GET'])
 def get_planets_by_id(id):
     
-    planet = planets.get_planets_by_id(id)
+    planet = Planets.get_planets_by_id(id)
     
-    return(jsonify(vehicle.serialize()))
+    return(jsonify(planet.serialize()))
 
 
-@app.route('/character', methods=['GET'])
+@app.route('/characters', methods=['GET'])
 def get_all_chars():
     
     characters = Character.get_all_chars()
@@ -100,7 +100,7 @@ def get_all_chars():
     return(jsonify(serialized_characters))
 
 
-@app.route('/character/<int:id>', methods=['GET'])
+@app.route('/characters/<int:id>', methods=['GET'])
 def get_character_by_id(id):
     
     character = Character.get_chars_by_id(id)
@@ -133,6 +133,22 @@ def get_favorites_by_id(id):
     favorite = Favorites.get_favorites_by_id(id)
     
     return(jsonify(favorite.serialize()))
+
+
+
+
+
+@app.route('/favorites', methods=['POST'])
+def create_favorite():
+    
+    favorite = Favorites(
+        id = 0,
+        #character_post_id = 1,
+        #user_id = 1
+    )
+
+    favorite.create()
+
 
 
 

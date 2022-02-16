@@ -194,6 +194,51 @@ def create_favorite_planet(id):
     return(jsonify(serialized_favorites))
 
 
+@app.route('/favorites/character/<int:id>', methods=['DELETE'])
+def delete_favorite_character(id):
+    
+    favorite = Favorites.get_favorites_by_character_post_id(id)
+
+    favorite.delete()
+
+    favorites = Favorites.get_all_favorites()
+    serialized_favorites = []
+    for favorite in favorites:
+        serialized_favorites.append(favorite.serialize())
+
+    return(jsonify(serialized_favorites))
+
+
+@app.route('/favorites/vehicles/<int:id>', methods=['DELETE'])
+def delete_favorite_vehicles(id):
+    
+    favorite = Favorites.get_favorites_by_vehicles_post_id(id)
+
+    favorite.delete()
+
+    favorites = Favorites.get_all_favorites()
+    serialized_favorites = []
+    for favorite in favorites:
+        serialized_favorites.append(favorite.serialize())
+
+    return(jsonify(serialized_favorites))
+
+
+
+@app.route('/favorites/planets/<int:id>', methods=['DELETE'])
+def delete_favorite_planets(id):
+    
+    favorite = Favorites.get_favorites_by_planets_post_id(id)
+
+    favorite.delete()
+
+    favorites = Favorites.get_all_favorites()
+    serialized_favorites = []
+    for favorite in favorites:
+        serialized_favorites.append(favorite.serialize())
+
+    return(jsonify(serialized_favorites))
+
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':

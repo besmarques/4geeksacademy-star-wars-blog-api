@@ -180,6 +180,10 @@ class Favorites(db.Model):
         db.session.add(self)
         db.session.commit()
 
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
     @classmethod
     def get_all_favorites(cls):
         favorites = cls.query.all()
@@ -194,3 +198,18 @@ class Favorites(db.Model):
     def get_favorites_by_user_id(cls, user_id):
         favorite_by_user_id = cls.query.filter_by(user_id = user_id).one_or_none()
         return favorite_by_user_id
+
+    @classmethod
+    def get_favorites_by_character_post_id(cls, character_post_id):
+        favorites_by_character_post_id = cls.query.filter_by(character_post_id = character_post_id).first()
+        return favorites_by_character_post_id
+
+    @classmethod
+    def get_favorites_by_planets_post_id(cls, planets_post_id):
+        favorites_by_planets_post_id = cls.query.filter_by(planets_post_id = planets_post_id).first()
+        return favorites_by_planets_post_id
+
+    @classmethod
+    def get_favorites_by_vehicles_post_id(cls, vehicles_post_id):
+        favorites_by_vehicles_post_id = cls.query.filter_by(vehicles_post_id = vehicles_post_id).first()
+        return favorites_by_vehicles_post_id

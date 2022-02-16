@@ -176,7 +176,6 @@ class Favorites(db.Model):
             "user_id": self.user_id
         }
     
-    @classmethod
     def create(self):
         db.session.add(self)
         db.session.commit()

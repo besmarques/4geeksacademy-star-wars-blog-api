@@ -138,19 +138,60 @@ def get_favorites_by_id(id):
 
 
 
-@app.route('/favorites', methods=['POST'])
-def create_favorite():
+@app.route('/favorites/character/<int:id>', methods=['POST'])
+def create_favorite_character(id):
     
     favorite = Favorites(
         id = 0,
-        #character_post_id = 1,
-        #user_id = 1
+        character_post_id = id,
+        user_id = 1
     )
 
     favorite.create()
 
+    favorites = Favorites.get_all_favorites()
+    serialized_favorites = []
+    for favorite in favorites:
+        serialized_favorites.append(favorite.serialize())
+
+    return(jsonify(serialized_favorites))
+
+@app.route('/favorites/vehicles/<int:id>', methods=['POST'])
+def create_favorite_vehicle(id):
+    
+    favorite = Favorites(
+        id = 0,
+        vehicles_post_id = id,
+        user_id = 1
+    )
+
+    favorite.create()
+
+    favorites = Favorites.get_all_favorites()
+    serialized_favorites = []
+    for favorite in favorites:
+        serialized_favorites.append(favorite.serialize())
+
+    return(jsonify(serialized_favorites))
 
 
+@app.route('/favorites/planets/<int:id>', methods=['POST'])
+def create_favorite_planet(id):
+    
+    favorite = Favorites(
+        id = 0,
+        planets_post_id = id,
+        user_id = 1
+    )
+
+    favorite.create()
+
+    favorites = Favorites.get_all_favorites()
+    serialized_favorites = []
+    for favorite in favorites:
+        serialized_favorites.append(favorite.serialize())
+
+    return(jsonify(serialized_favorites))
 
 
 
